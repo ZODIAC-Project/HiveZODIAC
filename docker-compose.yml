@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  hivemq:
+    image: hivemq/hivemq-ce:2023.6
+    ports:
+      - "1883:1883"   # MQTT port
+      - "8000:8000"   # HTTP API port
+    environment:
+      - HIVEMQ_LOG_LEVEL=INFO
+    volumes:
+      - hivemq-data:/opt/hivemq/data
+      - hivemq-log:/opt/hivemq/log
+      # start without this first to get a compatible version of allow-all extension
+      # - ./hive-extensions/:/opt/hivemq/extension_TEMP
+      - ./hive-extensions/:/opt/hivemq/extensions
+    restart: no
+
+volumes:
+  hivemq-data:
+  hivemq-log:
