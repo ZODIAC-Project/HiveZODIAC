@@ -23,7 +23,9 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.containerPort }}
+            {{- range .Values.containerPorts }}
+            - containerPort: {{ .containerPort }}
+            {{- end }}
           env:
 {{- if .Values.extraEnv }}
 {{ toYaml .Values.extraEnv | indent 12 }}

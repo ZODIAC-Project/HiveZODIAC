@@ -24,10 +24,10 @@ helm upgrade --install hivezodiac helm/hivezodiac -n hivezodiac --create-namespa
 4. Make the service accessible localy (port-forwarding):
 ```bash 
 # get pod name 
-POD=$(kubectl get pods -l app=hivezodiac -o jsonpath='{.items[0].metadata.name}')
+POD=$(kubectl get pods -l app=hivezodiac -o jsonpath='{.items[0].metadata.name}' -n hivezodiac)
 ```
-```bash
-kubectl port-forward pod/$POD 1883:1883
+```bash 
+kubectl port-forward pod/$POD 1883:1883 -n hivezodiac
 ```
 5. Stop and remove the deploment and all associated resources:
 ```bash
