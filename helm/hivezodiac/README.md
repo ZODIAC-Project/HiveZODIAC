@@ -19,17 +19,17 @@ minikube image load hivezodiac:latest
 3. Install or upgrade in your cluster:
 
 ```bash
-helm upgrade --install hivezodiac helm/hivezodiac -n hivezodiac --create-namespace
+helm upgrade --install zodiacbroker helm/hivezodiac -n zodiac --create-namespace
 ```
 4. Make the service accessible localy (port-forwarding):
 ```bash 
 # get pod name 
-POD=$(kubectl get pods -l app=hivezodiac -o jsonpath='{.items[0].metadata.name}' -n hivezodiac)
+POD=$(kubectl get pods -l app=zodiacbroker -o jsonpath='{.items[0].metadata.name}' -n zodiac)
 ```
 ```bash 
-kubectl port-forward pod/$POD 1883:1883 -n hivezodiac
+kubectl port-forward pod/$POD 1883:1883 -n zodiac
 ```
 5. Stop and remove the deploment and all associated resources:
 ```bash
-helm uninstall hivezodiac
+helm uninstall zodiacbroker -n zodiac
 ```
