@@ -38,24 +38,24 @@
 
 ## Deployment
 
-- **Apply (recommended simple flow):**
+- **Apply:**
+      Configurations:
+            If the Container is locally available, changeg the image field in `k8s/deployment.yaml` to `hivezodiac:latest`. If you have access to the registry `git.tu-berlin.de:5000`, you can use the URL in the deployment manifest. Or push the image to your own registry and update the manifest accordingly.
+
+      The Deployment file uses a ImagePullSecret. Make sure to create the secret or check if it already exists in the `zodiac` namespace before applying the deployment manifest:
+
+      ```bash
+      kubectl create secret docker-registry regcred \
+      --docker-server=git.tu-berlin.de:5000 \
+      --docker-username='DEPLOY_USER' \
+      --docker-password='DEPLOY_TOKEN' \
+      -n zodiac
+      ```
+
+      Then apply the deployment manifest:
 
       ```bash
       kubectl apply -f k8s/deployment.yaml
       ```
 
       This creates the `Service` and `Deployment` included in `k8s/deployment.yaml`. The manifest uses the image `hivezodiac:latest` by default — update the `image:` field if you push the image to a registry (for example `your-registry/hivezodiac:tag`) and add `imagePullSecrets` as needed.
-
-- **Notes:**
-      - The manifest contains a `ClusterIP` Service exposing ports `8080` (HTTP) and `1883` (MQTT).
-      - The `Deployment` sets `replicas: 1`.
-
-- **Local testing:**
-
-      ```bash
-      # build image
-      docker build -f Dockerfile.hivemq -t hivezodiac:latest .
-
-      # run locally
-      docker run -p 8080:8080 -p 1883:1883 --name hivezodiac-test hivezodiac:latest
-      ```
