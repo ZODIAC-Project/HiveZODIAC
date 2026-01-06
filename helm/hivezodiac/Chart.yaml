@@ -1,6 +1,0 @@
-apiVersion: v2
-name: hivezodiac
-description: A Helm chart for HiveZODIAC. A HiveMQ based deployment that got enahnced by adding PBAC capabilities.
-type: application
-version: 0.1.0
-appVersion: "latest"

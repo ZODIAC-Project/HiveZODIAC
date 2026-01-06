@@ -34,5 +34,28 @@
 3. (Optional) Test run the Container locally
    ```$ docker run -p 8080:8080 -p 1883:1883 --name hivezodiac-test hivezodiac:latest```
 
-4. The steps to deploy the image to a kubernetes cluster are described in the README of the helm chart located in `helm/hivezodiac/README.md`
+4. The steps to deploy the image to a kubernetes cluster are described below. The project keeps a rendered Kubernetes manifest at `k8s/deployment.yaml`.
 
+## Deployment
+
+- **Apply (recommended simple flow):**
+
+      ```bash
+      kubectl apply -f k8s/deployment.yaml
+      ```
+
+      This creates the `Service` and `Deployment` included in `k8s/deployment.yaml`. The manifest uses the image `hivezodiac:latest` by default — update the `image:` field if you push the image to a registry (for example `your-registry/hivezodiac:tag`) and add `imagePullSecrets` as needed.
+
+- **Notes:**
+      - The manifest contains a `ClusterIP` Service exposing ports `8080` (HTTP) and `1883` (MQTT).
+      - The `Deployment` sets `replicas: 1`.
+
+- **Local testing:**
+
+      ```bash
+      # build image
+      docker build -f Dockerfile.hivemq -t hivezodiac:latest .
+
+      # run locally
+      docker run -p 8080:8080 -p 1883:1883 --name hivezodiac-test hivezodiac:latest
+      ```
