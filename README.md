@@ -36,8 +36,8 @@ kubectl create namespace zodiac
 ```bash
 kubectl create secret docker-registry regcred \
 --docker-server=git.tu-berlin.de:5000 \
---docker-username='m.kaehler.01' \
---docker-password='RJTs8DZuBIzLHXw3LqXJ6W86MQp1OmhwOQk.01.0z1853wav' \
+--docker-username='' \
+--docker-password='' \
 -n zodiac
 ```
 
