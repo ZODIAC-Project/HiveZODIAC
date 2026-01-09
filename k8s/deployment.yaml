@@ -45,7 +45,7 @@ spec:
         - name: regcred
       containers:
         - name: hivezodiac
-          image: git.tu-berlin.de:5000/zodiac/zodiac-meta
+          image: git.tu-berlin.de:5000/zodiac/zodiac-meta:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
