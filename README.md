@@ -59,9 +59,11 @@ kubectl apply -f k8s/deployment.yaml
 3. start using docker compose
 4. go inside the container and copy the extension from /opt/hivemq/extensions into the mapped folder
 
-      ```$ docker exec -it <container_id> /bin/bash```
-      ```$ cp -r /opt/hivemq/extensions/* ./<your_folder_name>```
-      ```$ exit```
+      <!--```$ docker exec -it <container_id> /bin/bash```
+      ```$ cp -r /opt/hivemq-ce-2023.6/extensions/* ./<your_folder_name>```
+      ```$ exit```-->
+      ```docker cp hivezodiac-hivemq-1:/opt/hivemq-ce-2023.6/extensions/. ./<your_folder_name>```
+
       
 5. stop the container and change back the mapping line in yaml file
 #### 2. From now on, you can use the local folder as the actual extension folder
