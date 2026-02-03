@@ -21,6 +21,9 @@ spec:
       port: 1883
       targetPort: 1883
       protocol: TCP
+    - name: websocket
+      port: 8000
+      targetPort: 8000
   selector:
     app: hivezodiac
 ---
@@ -46,10 +49,11 @@ spec:
       containers:
         - name: hivezodiac
           image: git.tu-berlin.de:5000/zodiac/zodiac-meta:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
             - containerPort: 1883
+            - containerPort: 8000
           env:
           resources:
             {}
