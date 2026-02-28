@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  hivemq:
+    build:
+      context: .
+      dockerfile: Dockerfile.hivemq
+    image: hivezodiac:local
+    ports:
+      - "1883:1883"
+      - "8000:8000"
+    environment:
+      - HIVEMQ_LOG_LEVEL=INFO
+    volumes:
+      - hivemq-data:/opt/hivemq/data
+      - hivemq-log:/opt/hivemq/log
+    restart: no
+
+volumes:
+  hivemq-data:
+  hivemq-log:

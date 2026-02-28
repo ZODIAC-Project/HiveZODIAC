@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: zodiac
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: zodiac
+  name: hivezodiac
+  labels:
+    app: hivezodiac
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+    - name: mqtt
+      port: 1883
+      targetPort: 1883
+      protocol: TCP
+    - name: websocket
+      port: 8000
+      targetPort: 8000
+  selector:
+    app: hivezodiac
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: zodiac
+  name: hivezodiac
+  labels:
+    app: hivezodiac
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hivezodiac
+  template:
+    metadata:
+      labels:
+        app: hivezodiac
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: hivezodiac
+          image: git.tu-berlin.de:5000/zodiac/zodiac-meta:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+            - containerPort: 1883
+            - containerPort: 8000
+          env:
+          resources:
+            {}
+          volumeMounts:
+      volumes:

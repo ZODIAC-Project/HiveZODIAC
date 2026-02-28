@@ -1,0 +1,4 @@
+FROM hivemq/hivemq-ce:2023.6
+
+COPY hive-extensions/ /opt/hivemq/extensions/
+
