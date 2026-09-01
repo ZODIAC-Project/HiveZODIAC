@@ -83,14 +83,12 @@ public class PurposeManager {
         PurposeManager.getInstance();
         log.debug("setting authorizer provider");
 
-        if (PurposeSettings.get("filter_on_subscribe") || PurposeSettings.get("filter_hybrid")) {
-            APSubscriptionAuthorizer apSubscriptionAuthorizer = new APSubscriptionAuthorizer();
-            PBACAuthorizerProvider pbacAuthorizerProvider = new PBACAuthorizerProvider(apSubscriptionAuthorizer);
-            Services.securityRegistry().setAuthorizerProvider(pbacAuthorizerProvider);
-        } else {
-            PBACAuthorizerProvider nullProvider = new PBACAuthorizerProvider(null);
-            Services.securityRegistry().setAuthorizerProvider(nullProvider);
-        }
+        // The authorizer checks the current settings for every subscription.
+        // Keeping it registered makes runtime setting changes effective without
+        // resetting reservations, subscriptions, or the HiveMQ configuration.
+        APSubscriptionAuthorizer apSubscriptionAuthorizer = new APSubscriptionAuthorizer();
+        PBACAuthorizerProvider pbacAuthorizerProvider = new PBACAuthorizerProvider(apSubscriptionAuthorizer);
+        Services.securityRegistry().setAuthorizerProvider(pbacAuthorizerProvider);
 
         Services.securityRegistry().setAuthenticatorProvider(new PBACAuthProvider());
 
